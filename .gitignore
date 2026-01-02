@@ -1,0 +1,6 @@
+
+node_modules/
+dist/
+.env             # Chứa thông tin bảo mật (mật khẩu, key)
+npm-debug.log* # Các file log khi npm bị lỗi
+.DS_Store        # File rác tự sinh trên máy Mac

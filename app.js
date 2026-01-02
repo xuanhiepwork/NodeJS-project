@@ -1,11 +1,16 @@
-const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const routes = require('./routes');
+const app = express();
 
-// console.log
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-const server = http.createServer(routes.handler);
+app.use(bodyParser.urlencoded({ extended: false }));
 
-server.listen(3200);
+app.use(adminRoutes);
+app.use(shopRoutes);
 
-//bài 50 - 0:00
+app.listen(3200);
+
+//bài 65 - 0:00 | #4:30 - npm install --save body-parser
