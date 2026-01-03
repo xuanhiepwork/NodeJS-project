@@ -5,13 +5,16 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+app.set('view engine', 'pug');
+app.set('views', 'views');
+
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
@@ -20,8 +23,9 @@ app.use((req, res, next) => {
 
 app.listen(3200);
 
-//bài 65 | #4:30 - npm install --save body-parser
+//bài 65 || #4:30 | npm install --save body-parser
+//bài 82 || #0:30 | npm install --save ejs pug express-handlebars (tải 3 thư viện template engine)
 //bài 80 | Target ngày 3/1/2026
-//bài 74 - 0:00 | Coi lại chứ lỗi đoạn này | Link: https://www.udemy.com/course/nodejs-the-complete-guide/learn/lecture/11566314#overview
+//bài 85 - 0:00
 
 //Nhớ đánh giá điểm rèn luyện trên trường không là tạch đấy =))
