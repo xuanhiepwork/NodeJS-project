@@ -38,4 +38,5 @@ app.listen(3200);
 //bài 82 || #0:30 | npm install --save ejs pug express-handlebars (tải 3 thư viện template engine)
 //bài 88 || npm install --save express-handlebars@3.0
 //bài 96 | Target ngày 4/1/2026
-//bài 102 - 0:00
+//bài 104 | lỗi ở thư mục models/product.js
+//bài 105 - 0:00
