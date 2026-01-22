@@ -1,0 +1,60 @@
+/* Đảm bảo Form luôn nằm giữa và ôm trọn nội dung */
+.product-form {
+    /* width: 35rem;
+    max-width: 90%;
+    margin: 3rem auto;  */
+    /* Căn giữa */
+    /* padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(15, 42, 63, 0.1);  */
+    /* Đổ bóng nhẹ */
+    
+    /* Flexbox để sửa lỗi vỡ khung */
+    /* display: flex;
+    flex-direction: column; 
+    box-sizing: border-box;  */
+    /* Tính toán padding vào độ rộng */
+
+    width: 35rem;
+    max-width: 90%;
+    margin: 3rem auto;
+    padding: 2.5rem; /* Tăng padding để thoáng hơn */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(15, 42, 63, 0.1);
+    display: block; /* Trả về block để bao quanh nội dung */
+    overflow: hidden; /* Đảm bảo không có gì tràn ra ngoài */
+}
+
+.form-control {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #0f2a3f; /* Màu xanh đậm chủ đạo */
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.form-control input,
+.form-control textarea {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font: inherit;
+    box-sizing: border-box; /* QUAN TRỌNG: Ngăn input bị tràn ra khỏi form */
+    transition: all 0.3s;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+    outline: none;
+    border-color: #3b6978; /* Màu xanh điểm nhấn khi focus */
+    background-color: #f0f8ff; /* Nền xanh cực nhạt khi gõ */
+}

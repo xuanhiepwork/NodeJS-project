@@ -1,44 +1,81 @@
-.body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+:root {
+  /* Bảng màu Deep Ocean Blue */
+  --primary-color: #0f2a3f;      /* Xanh biển rất đậm (Navy) */
+  --secondary-color: #204051;    /* Xanh đá phiến */
+  --accent-color: #3b6978;       /* Xanh cổ vịt (tạo điểm nhấn) */
+  --highlight-color: #84a9ac;    /* Xanh ngọc nhạt (cho text/hover) */
+  --text-color: #333;
+  --bg-color: #eef2f5;           /* Màu nền xám xanh cực nhạt */
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 main {
-    padding: 1rem;
+  padding: 2rem;
+  max-width: 1200px; /* Giới hạn chiều rộng để web không bị bè ra quá */
+  margin: auto;
+}
+
+form {
+    display: inline;
+}
+
+.centered {
+    text-align: center;
 }
 
 .main-header {
-    width: 100%;
-    height: 3.5rem;
-    background-color: #dbc441;
-    padding: 0 1.5rem;
+  width: 100%;
+  height: 4rem;
+  background-color: var(--primary-color);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .main-header__nav {
-    height: 100%;
-    display: flex;
-    align-items: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Dàn đều layout */
 }
 
 .main-header__item-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .main-header__item {
-    margin: 0 1rem;
-    padding: 0;
+  margin: 0 1rem;
 }
 
 .main-header__item a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: #b0c4de; /* Màu chữ xám xanh nhạt */
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
-.main-header__item a:hover, 
+.main-header__item a:hover,
 .main-header__item a:active,
 .main-header__item a.active {
-    color: #3e00a1;
+  color: white;
+  background-color: var(--accent-color); /* Nền xanh sáng khi hover */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
