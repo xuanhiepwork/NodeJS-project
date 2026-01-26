@@ -4,7 +4,7 @@
 //bài 88 || npm install --save express-handlebars@3.0
 //bài ... || Lỗi
 //bài ... | Target ngày 23/1/2026
-//bài 130 - 0:00
+//bài 131 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
