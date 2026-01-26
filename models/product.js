@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+
+const Cart = require('./cart');
 // const e = require('express'); //dòng code thừa
 // const { get } = require('http'); //để làm gì??? | dòng code thừa
 
@@ -53,10 +55,11 @@ module.exports = class Product {
 
     static deleteById(id) {
         getProductsFromFile((products) => {
+            const product = products.find(prod => prod.id === id)
             const updatedProducts = products.filter(prod => prod.id !== id);
             fs.writeFile(p, JSON.stringify(updatedProducts), err => {
                 if (!err) {
-
+                    Cart.deleteProduct(id, product.price);
                 }
             })
         });
