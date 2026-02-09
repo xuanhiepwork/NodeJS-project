@@ -6,7 +6,7 @@ const bodyParser = require('body-parser'); //xử lý form data
 // const expressHbs = require('express-handlebars');
 
 const errorController = require('./controllers/error');
-
+const db = require('./util/database');
 
 const app = express();
 
