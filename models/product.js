@@ -91,7 +91,9 @@ module.exports = class Product {
     }
 
     save() {
-
+        return db.execute('INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)',
+            [this.title, this.price, this.imageUrl, this.description]
+        )
     }
 
     static deleteById(id) {
@@ -103,7 +105,7 @@ module.exports = class Product {
     }
 
     static findById(id, cb) {
-
+        return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
     }
 };
 

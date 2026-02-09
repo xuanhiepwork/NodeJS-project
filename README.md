@@ -6,7 +6,7 @@
 //bài 141 || npm install --save mysql2 || Thư viện cho mySQL
 //bài ... || Lỗi
 //bài ... | Target ngày 23/1/2026
-//bài 144 - 5:00
+//bài 146 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
