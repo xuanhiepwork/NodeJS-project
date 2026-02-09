@@ -7,7 +7,7 @@
 //bài 152 || npm install --save sequelize
 //bài ... || Lỗi
 //bài ... | Target ngày 23/1/2026
-//bài 153 - 0:00
+//bài 154 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
@@ -78,3 +78,16 @@ const users = await User.findAll({
   include: Product
 });
 console.log(JSON.stringify(users, null, 2));
+
+
+# Làm việc với các nhánh trên git
+## Tạo nhánh tên là database vừa tự động "nhảy" sang nhánh đó
+```
+git checkout -b database
+```
+## Tạo nhánh: git branch database 
+## Chuyển nhánh: git checkout database
+### Kiểm tra mình đang ở nhánh nào
+```
+git branch
+```
