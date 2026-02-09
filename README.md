@@ -73,6 +73,11 @@ Product.belongsTo(User);
 Định nghĩa Model: Tạo ra cái "khuôn" cho dữ liệu.Thao tác dữ liệu: Dùng Model để truy vấn (Queries) hoặc tạo ra các bản ghi cụ thể (Instances).
 Kết nối dữ liệu: Thiết lập các mối quan hệ (Associations) để quản lý logic phức tạp giữa các bảng.
 
+## Note:
+With Sequelize v5, findById() (which we'll use in this course) was replaced by findByPk().
+
+You use it in the same way, so you can simply replace all occurrences of findById() with findByPk()
+
 ### Truy vấn tất cả người dùng và sản phẩm của họ
 const users = await User.findAll({
   include: Product
