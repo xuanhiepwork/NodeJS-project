@@ -46,6 +46,7 @@ exports.postAddProduct = (req, res, next) => {
     })
         .then(() => {
             console.log('Sản phẩm đã được tạo!')
+            res.redirect('/admin/products');
         })
         .catch(err => console.log(err));
 };
@@ -90,15 +91,27 @@ exports.postEditProduct = (req, res, next) => {
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDesc = req.body.description;
-    const updatedProduct = new Product(
-        prodId,
-        updatedTitle,
-        updatedImageUrl,
-        updatedDesc,
-        updatedPrice
-    );
-    updatedProduct.save();
-    res.redirect('/admin/products');
+    // const updatedProduct = new Product( 
+    //     prodId,
+    //     updatedTitle,
+    //     updatedImageUrl,
+    //     updatedDesc,
+    //     updatedPrice
+    // );
+    // updatedProduct.save();
+    Product.findById(prodId) //UPDATE PRODUCTS IN DATABASE
+        .then(product => {
+            product.title = updatedTitle;
+            product.price = updatedPrice;
+            product.description = updatedDesc;
+            product.imageUrl = updatedImageUrl;
+            return product.save();
+        })
+        .then(result => {
+            console.log('UPDATE PRODUCT!!!!')
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err))
 };
 
 // exports.getProducts = (req, res, next) => {
@@ -125,6 +138,15 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.deleteById(prodId);
+    // Product.deleteById(prodId);
+    Product.findById(prodId) //DELETING PRODUCTS IN DATABASE
+        .then(product => {
+            return product.destroy();
+        })
+        .then(result => {
+            console.log('DESTROYED PRODUCTS');
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err));
     res.redirect('/admin/products');
 };
