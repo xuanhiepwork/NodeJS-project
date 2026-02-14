@@ -7,7 +7,7 @@
 //bài 152 || npm install --save sequelize
 //bài ... || Lỗi
 //bài ... | Target ngày 23/1/2026
-//bài 158 - 0:00
+//bài 160 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
