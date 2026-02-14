@@ -38,8 +38,6 @@ exports.getProducts = (req, res, next) => {
         });
 };
 
-
-
 // exports.getProduct = (req, res, next) => {
 //     const prodId = req.params.productId;
 //     Product.findById(prodId, product => {
@@ -53,10 +51,19 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([product]) => {
+    // Product.findAll({ where: { id: prodId } }) //Version 1: GET A SINGLE PRODUCT WWITH WHERE CONDITION
+    //     .then(products => {
+    //         res.render('shop/product-detail', {
+    //             product: products[0],
+    //             pageTitle: products[0].title,
+    //             path: '/products'
+    //         });
+    //     })
+    //     .catch(err => console.log(err));
+    Product.findById(prodId) //Version 2: GET A SINGLE PRODUCT WWITH WHERE CONDITION
+        .then(product => {
             res.render('shop/product-detail', {
-                product: product[0],
+                product: product,
                 pageTitle: product.title,
                 path: '/products'
             });
