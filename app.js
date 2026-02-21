@@ -35,6 +35,15 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    User.fightById(1)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err)); //tạo user mặc định trong suốt quá trình chạy server
+});
+
 // ROUTES USE
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -45,9 +54,23 @@ Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
 sequelize
-    .sync({ force: true })
+    // .sync({ force: true })
+    .sync()
     .then(result => {
+        User.findById(1);
         // console.log(result);
+        // app.listen(3000);
+    })
+    .then(user => {
+        if (!user) {
+            return User.create({ name: 'Max', email: 'test@test.com' });
+        }
+        // return Promise.resolve(user);
+        return user;
+
+    })
+    .then(result => {
+        console.log(result);
         app.listen(3000);
     })
     .catch(err => {
