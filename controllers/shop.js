@@ -69,9 +69,7 @@ exports.getIndex = (req, res, next) => {
                 path: '/'
             });
         })
-        .catch(err => {
-            console.log(err)
-        });
+        .catch(err => console.log(err));
 };
 
 exports.getCart = (req, res, next) => {
@@ -84,57 +82,81 @@ exports.getCart = (req, res, next) => {
                     res.render('shop/cart', {
                         path: '/cart',
                         pageTitle: 'Your Cart',
-                        products: cartProducts
-                    })
-                        .catch(err => console.log(err));
+                        products: products
+                    });
                 })
                 .catch(err => console.log(err));
-            // Cart.getCart(cart => {
-            //     Product.fetchAll(products => {
-            //         const cartProducts = [];
-            //         for (product of products) {
-            //             const cartProductData = cart.products.find(
-            //                 prod => prod.id === product.id
-            //             );
-            //             if (cartProductData) {
-            //                 cartProducts.push({ productData: product, qty: cartProductData.qty });
-            //             }
-            //         }
-            //         res.render('shop/cart', {
-            //             path: '/cart',
-            //             pageTitle: 'Your Cart',
-            //             products: cartProducts
-            //         });
-            //     });
-            // });
-        };
+        })
+        .catch(err => console.log(err));
+}; // SỬA LỖI 2: Đóng ngoặc đúng cú pháp (bỏ dấu ngoặc tròn dư thừa)
 
-    exports.postCart = (req, res, next) => {
-        const prodId = req.body.productId;
-        Product.findById(prodId, product => {
-            Cart.addProduct(prodId, product.price);
-        });
-        res.redirect('/cart');
-    };
+// SỬA LỖI 3: Viết lại postCart dùng Sequelize
+exports.postCart = (req, res, next) => {
+    const prodId = req.body.productId;
+    let fetchedCart;
+    let newQuantity = 1;
 
-    exports.postCartDeleteProduct = (req, res, next) => {
-        const prodId = req.body.productId;
-        Product.findById(prodId, product => {
-            Cart.deleteProduct(prodId, product.price);
+    req.user
+        .getCart()
+        .then(cart => {
+            fetchedCart = cart;
+            return cart.getProducts({ where: { id: prodId } });
+        })
+        .then(products => {
+            let product;
+            if (products.length > 0) {
+                product = products[0];
+            }
+            if (product) {
+                // Nếu sản phẩm đã có trong giỏ, tăng số lượng
+                const oldQuantity = product.cartItem.quantity;
+                newQuantity = oldQuantity + 1;
+                return product;
+            }
+            // Nếu chưa có, tìm sản phẩm từ database
+            return Product.findByPk(prodId);
+        })
+        .then(product => {
+            // Thêm sản phẩm vào giỏ hàng (cập nhật bảng trung gian cartItem)
+            return fetchedCart.addProduct(product, {
+                through: { quantity: newQuantity }
+            });
+        })
+        .then(() => {
             res.redirect('/cart');
-        });
-    };
+        })
+        .catch(err => console.log(err));
+};
 
-    exports.getOrders = (req, res, next) => {
-        res.render('shop/orders', {
-            path: '/orders',
-            pageTitle: 'Your Orders'
-        });
-    };
+// SỬA LỖI 4: Viết lại postCartDeleteProduct dùng Sequelize
+exports.postCartDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    req.user
+        .getCart()
+        .then(cart => {
+            return cart.getProducts({ where: { id: prodId } });
+        })
+        .then(products => {
+            const product = products[0];
+            // Xóa dòng trong bảng trung gian (cartItem)
+            return product.cartItem.destroy();
+        })
+        .then(result => {
+            res.redirect('/cart');
+        })
+        .catch(err => console.log(err));
+};
 
-    exports.getCheckout = (req, res, next) => {
-        res.render('shop/checkout', {
-            path: '/checkout',
-            pageTitle: 'Checkout'
-        });
-    };
+exports.getOrders = (req, res, next) => {
+    res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders'
+    });
+};
+
+exports.getCheckout = (req, res, next) => {
+    res.render('shop/checkout', {
+        path: '/checkout',
+        pageTitle: 'Checkout'
+    });
+};
