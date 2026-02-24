@@ -64,8 +64,8 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-    .sync({ force: true }) // Chỉ bật cái này khi muốn xóa sạch bảng cũ làm lại
-    // .sync()
+    //.sync({ force: true }) // Chỉ bật cái này khi muốn xóa sạch bảng cũ làm lại
+    .sync()
     .then(user => {
         return User.findByPk(1);
         // console.log(result);
