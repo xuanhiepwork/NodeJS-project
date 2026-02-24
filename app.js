@@ -59,9 +59,9 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
-    .sync({ force: true }) // Chỉ bật cái này khi muốn xóa sạch bảng cũ làm lại
-    // .sync()
-    .then(result => {
+    //.sync({ force: true }) // Chỉ bật cái này khi muốn xóa sạch bảng cũ làm lại
+    .sync()
+    .then(user => {
         return User.findByPk(1);
         // console.log(result);
         // app.listen(3000);
@@ -72,11 +72,13 @@ sequelize
         }
         // return Promise.resolve(user);
         return user;
-
     })
-    .then(result => {
-        console.log(result); // Đã đảm bảo DB chạy xong mới bật server
-        app.listen(3200);
+    .then(user => {
+        //console.log(user); // Đã đảm bảo DB chạy xong mới bật server
+        return user.createCart();
+    })
+    .then(cart => {
+        app.listen(3000);
     })
     .catch(err => {
         console.log(err)
