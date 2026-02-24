@@ -5,10 +5,11 @@ const sequelize = require('../util/database');
 const OrderItem = sequelize.define('orderItem', {
     id: {
         type: Sequelize.INTEGER,
-        autoIncreement: true,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
-    }
+    },
+    quantity: Sequelize.INTEGER
 });
 
 module.exports = OrderItem;

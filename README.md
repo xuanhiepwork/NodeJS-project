@@ -17,7 +17,7 @@
 Title: here
 ```
 
-# Tạo mySQL server và run trên docker:
+# Tạo mySQL server và run trên docker | Docker & MySQL Setup:
 docker run -d -p 3306:3306 --name nodeserver -e MYSQL_ROOT_PASSWORD=password123 mysql:8.0
 ### Mật khẩu: 
 password123
@@ -98,3 +98,46 @@ git checkout -b database
 ```
 git branch
 ```
+
+
+-------------------------
+# Kiến thức cốt lõi về Sequelize
+
+Dưới đây là phiên bản đã được chuẩn hóa lại để trông chuyên nghiệp hơn (sử dụng bảng so sánh, highlight code, và phân chia bố cục rõ ràng). Bạn có thể copy toàn bộ đoạn dưới đây đè vào phần cũ trong file README.md:Markdown# Kiến thức cốt lõi về Sequelize
+
+Sequelize là một Node.js ORM (Object-Relational Mapping) mạnh mẽ, giúp quản lý và thao tác với cơ sở dữ liệu SQL thông qua cú pháp JavaScript hiện đại mà không cần viết các câu lệnh SQL thuần.
+
+Dưới đây là 4 khái niệm nền tảng:
+
+## 1. Models (Mô hình)
+Model là thành phần cốt lõi của Sequelize, đại diện cho một **Bảng (Table)** trong cơ sở dữ liệu.
+
+* **Vai trò:** Định nghĩa tên bảng, cấu trúc cột, kiểu dữ liệu và các ràng buộc (constraints).
+* **Ví dụ:**
+
+```javascript
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  birthday: DataTypes.DATE
+});
+2. Instances (Thực thể)Instance đại diện cho một Hàng (Row) dữ liệu cụ thể trong bảng.Vai trò: Là một đối tượng JavaScript chứa dữ liệu thực tế. Mọi thay đổi trên object này có thể được lưu ngược lại vào database.Phân biệt phương thức tạo:.build(): Khởi tạo instance trong bộ nhớ tạm (chưa lưu vào DB)..create(): Khởi tạo và thực hiện lệnh INSERT vào DB ngay lập tức.Ví dụ:JavaScript// Tạo và lưu dữ liệu ngay lập tức
+const user = await User.create({ 
+  username: 'Hiep', 
+  birthday: new Date(1999, 1, 1) 
+});
+3. Queries (Truy vấn)Queries cung cấp các phương thức có sẵn để thực hiện thao tác CRUD (Create, Read, Update, Delete) một cách trừu tượng hóa.Bảng so sánh phương thức Sequelize và SQL tương ứng:Phương thức SequelizeCâu lệnh SQL Tương ứngÝ nghĩaUser.findAll()SELECT * FROM Users;Lấy danh sách tất cả bản ghiUser.findByPk(id)SELECT * ... WHERE id = ?;Tìm bản ghi theo Khóa chính (Primary Key)User.update({...})UPDATE Users SET ...Cập nhật dữ liệuUser.destroy({...})DELETE FROM Users ...Xóa dữ liệu⚠️ Lưu ý quan trọng: Từ phiên bản Sequelize v5, hàm findById() đã bị loại bỏ và thay thế hoàn toàn bằng findByPk(). Cú pháp sử dụng vẫn giữ nguyên.4. Associations (Liên kết)Associations dùng để thiết lập mối quan hệ giữa các bảng (Foreign Keys), cho phép thực hiện các truy vấn lồng nhau (JOIN) dễ dàng.Các loại quan hệ phổ biến:hasOne (1-1)belongsTo (1-1)hasMany (1-n)belongsToMany (n-n)Ví dụ thiết lập (Một User có nhiều Product):JavaScript// Định nghĩa quan hệ
+User.hasMany(Product);
+Product.belongsTo(User);
+Ví dụ truy vấn lồng nhau (Eager Loading):JavaScript// Lấy User kèm theo danh sách Product của họ
+const users = await User.findAll({
+  include: Product
+});
+🔄 Tóm tắt luồng hoạt độngĐịnh nghĩa Model: Tạo "khuôn mẫu" cho dữ liệu (Schema).Thiết lập Associations: Kết nối các Model với nhau (Relations).Thao tác: Sử dụng Model để chạy Queries hoặc tạo Instances để tương tác dữ liệu.
+### Các điểm nâng cấp:
+1.  **Dùng Code Block chuẩn:** Thay vì viết code lẫn trong văn bản, mình dùng ` ```javascript ` để code có màu sắc dễ đọc.
+2.  **Dùng Bảng (Table):** Phần so sánh `findAll`, `findByPk` được đưa vào bảng giúp người đọc dễ so sánh với SQL thuần hơn.
+3.  **Highlight Lưu ý:** Phần đổi từ `findById` sang `findByPk` được đưa vào blockquote (`>`) để gây chú ý, tránh việc bạn copy code cũ bị lỗi.
+4.  **Phân cấp rõ ràng:** Dùng các thẻ `##` để chia nhỏ từng mục.

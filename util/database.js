@@ -20,3 +20,6 @@ const sequelize = new Sequelize('node-database', 'root', 'password123', {
 });
 
 module.exports = sequelize;
+
+
+//---Không được copy file này!!!---

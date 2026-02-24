@@ -1,12 +1,9 @@
-//THƯ VIỆN & CONTROLLER
-const path = require('path'); //xử lý đường dẫn
+const path = require('path');
 
-const express = require('express'); //tạo server
-const bodyParser = require('body-parser'); //xử lý form data
-// const expressHbs = require('express-handlebars');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
-// const db = require('./util/database');
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const User = require('./models/user');
@@ -44,7 +41,7 @@ app.use((req, res, next) => {
             req.user = user;
             next();
         })
-        .catch(err => console.log(err)); //tạo user mặc định trong suốt quá trình chạy server
+        .catch(err => console.log(err));
 });
 
 // ROUTES USE
@@ -64,30 +61,25 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-    //.sync({ force: true }) // Chỉ bật cái này khi muốn xóa sạch bảng cũ làm lại
+    // .sync({ force: true }) // Reset lại các bảng database
     .sync()
-    .then(user => {
-        return User.findByPk(1);
+    .then(result => {
+        return User.findById(1);
         // console.log(result);
-        // app.listen(3000);
     })
     .then(user => {
         if (!user) {
             return User.create({ name: 'Max', email: 'test@test.com' });
         }
-        // return Promise.resolve(user);
         return user;
     })
     .then(user => {
-        //console.log(user); // Đã đảm bảo DB chạy xong mới bật server
+        // console.log(user);
         return user.createCart();
     })
     .then(cart => {
         app.listen(3000);
     })
     .catch(err => {
-        console.log(err)
+        console.log(err);
     });
-
-// SERVER
-// app.listen(3200); //ĐÃ CHUYỂN VÀO TRONG THEN BÊN TRÊN

@@ -13,15 +13,14 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    req.user.createProduct({ /*CREATE PRODUCTS IN DATABASE*/ }) // Sử dụng Magic Method của Sequelize để tự động gán userId
-    Product.create({
-        title: title,
-        price: price,
-        imageUrl: imageUrl,
-        description: description,
-        // userId: req.user.id
-    })
-        .then(() => {
+    req.user
+        .createProduct({ //.createProduct({ /*CREATE PRODUCTS IN DATABASE*/ }) // Sử dụng Magic Method của Sequelize để tự động gán userId
+            title: title,
+            price: price,
+            imageUrl: imageUrl,
+            description: description,
+        })
+        .then(result => {
             console.log('Sản phẩm đã được tạo!')
             res.redirect('/admin/products');
         })
@@ -75,18 +74,7 @@ exports.postEditProduct = (req, res, next) => {
         .catch(err => console.log(err))
 };
 
-// exports.getProducts = (req, res, next) => {
-//     Product.fetchAll(products => {
-//         res.render('admin/products', {
-//             prods: products,
-//             pageTitle: 'Admin Products',
-//             path: '/admin/products'
-//         });
-//     });
-// };
-
 exports.getProducts = (req, res, next) => {
-    // Product.findAll() // Fetching Admin Products
     req.user
         .getProducts() // cái này là chỉ lấy sản phẩm của admin đã đăng nhập
         .then(products => {
@@ -101,15 +89,13 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    // Product.deleteById(prodId);
     Product.findById(prodId) //DELETING PRODUCTS IN DATABASE
         .then(product => {
             return product.destroy();
         })
         .then(result => {
-            console.log('DESTROYED PRODUCTS');
+            console.log('DESTROYED PRODUCT');
             res.redirect('/admin/products');
         })
         .catch(err => console.log(err));
-    res.redirect('/admin/products');
 };
