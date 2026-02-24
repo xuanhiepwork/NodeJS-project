@@ -38,17 +38,21 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
+    req.user.createProduct({ /*CREATE PRODUCTS IN DATABASE*/ }) // Sử dụng Magic Method của Sequelize để tự động gán userId
     Product.create({
         title: title,
         price: price,
         imageUrl: imageUrl,
-        description: description
+        description: description,
+        // userId: req.user.id
     })
         .then(() => {
             console.log('Sản phẩm đã được tạo!')
             res.redirect('/admin/products');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+        });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -57,21 +61,23 @@ exports.getEditProduct = (req, res, next) => {
         return res.redirect('/');
     }
     const prodId = req.params.productId;
+    req.user
+        .getProducts({ where: { id: prodId } })
+        // Product.findById(prodId, product => {
+        //     if (!product) {
+        //         return res.redirect('/');
+        //     }
+        //     res.render('admin/edit-product', {
+        //         pageTitle: 'Edit Product',
+        //         path: '/admin/edit-product',
+        //         editing: editMode,
+        //         product: product
+        //     });
+        // });
 
-    // Product.findById(prodId, product => {
-    //     if (!product) {
-    //         return res.redirect('/');
-    //     }
-    //     res.render('admin/edit-product', {
-    //         pageTitle: 'Edit Product',
-    //         path: '/admin/edit-product',
-    //         editing: editMode,
-    //         product: product
-    //     });
-    // });
-
-    Product.findById(prodId)
-        .then(product => {
+        // Product.findById(prodId) //Fetching Product for Edit
+        .then(products => {
+            const product = products[0];
             if (!product) {
                 return res.redirect('/');
             }
@@ -125,7 +131,9 @@ exports.postEditProduct = (req, res, next) => {
 // };
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll() // Fetching Admin Products
+    // Product.findAll() // Fetching Admin Products
+    req.user
+        .getProducts() // cái này là chỉ lấy sản phẩm của admin đã đăng nhập
         .then(products => {
             res.render('admin/products', {
                 prods: products,

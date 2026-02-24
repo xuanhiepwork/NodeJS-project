@@ -5,9 +5,11 @@
 //bài 140 || download mySQL
 //bài 141 || npm install --save mysql2 || Thư viện cho mySQL
 //bài 152 || npm install --save sequelize
+//bài 166 || Lỗi
+//bài 167 || xóa hết các note để code clear nhất có thể
 //bài ... || Lỗi
-//bài ... | Target ngày 23/1/2026
-//bài 164 - 0:00
+//bài 176 | Target ngày 24/1/2026
+//bài 167 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
