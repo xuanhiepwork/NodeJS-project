@@ -9,7 +9,7 @@
 //bài 167 || xóa hết các note để code clear nhất có thể
 //bài ... || Lỗi
 //bài 176 | Target ngày 24/1/2026
-//bài 167 - 0:00
+//bài 171 - 0:00
 
 //dùng AI check xem git đã có những file nào thay đổi, dùng file đó update cho AI
 
